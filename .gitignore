@@ -1,0 +1,7 @@
+logs/*
+!.gitkeep
+node_modules/
+liwid_generic/
+tmp
+.DS_Store
+.idea

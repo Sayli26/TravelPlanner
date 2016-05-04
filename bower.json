@@ -1,0 +1,11 @@
+{
+  "name": "LiWid-Seed",
+  "description": "A starter project for AngularJS using LiWid Framework for TCS ABM AMRO Account",
+  "version": "0.0.0",
+  "homepage": "",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "liwid": "~1.4.0"
+  }
+}
