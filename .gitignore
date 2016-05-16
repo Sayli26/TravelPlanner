@@ -1,7 +1,7 @@
 logs/*
 !.gitkeep
 node_modules/
-liwid_generic/
+liwid/
 tmp
 .DS_Store
 .idea
