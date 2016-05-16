@@ -1,0 +1,12 @@
+{
+  "name": "liwid",
+  "_release": "15e50deb5d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "15e50deb5d09683ffb1b61a58eac8e94f56c8532"
+  },
+  "_source": "https://C39199@p-bitbucket.nl.eu.abnamro.com:7999/scm/~c39199/liwid.git",
+  "_target": "*",
+  "_originalSource": "https://C39199@p-bitbucket.nl.eu.abnamro.com:7999/scm/~c39199/liwid.git"
+}

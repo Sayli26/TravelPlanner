@@ -1,0 +1,11 @@
+{"accountsList":
+	{"account":[
+		{"accountNumber":121951650,
+			"externalName":"Priverekening",
+			"currentBalance":5641.28,
+			"currency":"EUR",
+			"accountHolderName":"van Jtgpgq",
+			"overdraftLimit":0,
+			"transferAllwdFlag":false,
+			"standingOrderFlag":true,
+			"ibanNumber":"NL23ABNA0121951650"}]}}

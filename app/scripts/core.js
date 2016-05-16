@@ -5,22 +5,22 @@ require
 
 			// alias libraries paths. Must set 'angular'
         paths : {
-            'jquery'  : '../../liwid_generic/lib/jquery/1.12.3/jquery',
-			'jquery-ui'  : '../../liwid_generic/lib/jquery/ui/1.10.2/jquery-ui',
-			'angular' : '../../liwid_generic/lib/angular/1.5.3/angular',
-			'angularAMD' : '../../liwid_generic/lib/angular/AMD/angularAMD.min',
-			'ui-router' : '../../liwid_generic/lib/angular/ui-router/angular-ui-router-0.2.18.min',
-			'angular-route' : '../../liwid_generic/lib/angular/1.5.3/angular-route.min',
-			'angular-resource':	'../../liwid_generic/lib/angular/1.5.3/angular-resource.min',
-			'angular-locale_nl': '../../liwid_generic/lib/angular/1.5.3/i18n/angular-locale_nl-nl',
-			'gettext': '../../liwid_generic/lib/angular/gettext/angular-gettext.min',
-			'bootstrap' : '../../liwid_generic/lib/angular/ui-bootstrap/1.3.2/bootstrap.min',
-			'ui-bootstrap-tpls' : '../../liwid_generic/lib/angular/ui-bootstrap/1.3.2/ui-bootstrap-tpls-0.11.0',
-			'liwid-modules' : '../../liwid_generic/scripts/liwid-modules',
-			'screen-header' : '../../liwid_generic/scripts/liwid-directives/screen-header/directive',
-			'liwid-filters' : '../../liwid_generic/scripts/liwid-filters/filters',
-			'spin' : '../../liwid_generic/lib/angular/spinner/spin.min',
-		    'angular-spinner': '../../liwid_generic/lib/angular/spinner/angular-spinner.min'
+            'jquery'  : '../../liwid/lib/jquery/1.12.3/jquery',
+			'jquery-ui'  : '../../liwid/lib/jquery/ui/1.10.2/jquery-ui',
+			'angular' : '../../liwid/lib/angular/1.5.3/angular',
+			'angularAMD' : '../../liwid/lib/angular/AMD/angularAMD.min',
+			'ui-router' : '../../liwid/lib/angular/ui-router/angular-ui-router-0.2.18.min',
+			'angular-route' : '../../liwid/lib/angular/1.5.3/angular-route.min',
+			'angular-resource':	'../../liwid/lib/angular/1.5.3/angular-resource.min',
+			'angular-locale_nl': '../../liwid/lib/angular/1.5.3/i18n/angular-locale_nl-nl',
+			'gettext': '../../liwid/lib/angular/gettext/angular-gettext.min',
+			'bootstrap' : '../../liwid/lib/angular/ui-bootstrap/1.3.2/bootstrap.min',
+			'ui-bootstrap-tpls' : '../../liwid/lib/angular/ui-bootstrap/1.3.2/ui-bootstrap-tpls-0.11.0',
+			'liwid-modules' : '../../liwid/scripts/liwid-modules',
+			'screen-header' : '../../liwid/scripts/liwid-directives/screen-header/directive',
+			'liwid-filters' : '../../liwid/scripts/liwid-filters/filters',
+			'spin' : '../../liwid/lib/angular/spinner/spin.min',
+		    'angular-spinner': '../../liwid/lib/angular/spinner/angular-spinner.min'
 					
         },
 

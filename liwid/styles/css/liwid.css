@@ -1,0 +1,21 @@
+.print-icon{
+	float:right;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.spinner:before {
+  content: '';
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.pagination-div > .row > div{
+	line-height: inherit;
+	vertical-align: middle;
+}
