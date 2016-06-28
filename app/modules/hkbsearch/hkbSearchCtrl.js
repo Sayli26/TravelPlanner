@@ -1,7 +1,9 @@
 'use strict';
-define(['app', 'jquery','models/getcostreports','models/getpositiondetails'], function (app, $) {
+define(['app', 'jquery','models/getcostreports','models/getpositiondetails','http-error-handling','spin','angular-spinner'], function (app) {
 	
-    app.controller('hkbsearchCtr', ['$scope', '$rootScope', 'gettextCatalog', '$location','CostReports','$filter','hkbCache', function ($scope, $rootScope, gettextCatalog, $location,CostReports,$filter,hkbCache) {
+    app.controller('hkbsearchCtr', ['$scope', '$rootScope', 'gettextCatalog', '$location','CostReports','$filter','hkbCache','usSpinnerService','InitialAuthCheck', function ($scope, $rootScope, gettextCatalog, $location,CostReports,$filter,hkbCache,usSpinnerService,InitialAuthCheck) {
+
+        InitialAuthCheck('/investmentcosts','LABEL_AUTHORIZATION_ERROR','MESSAGE_AUTH_ERROR_FRONTEND');
 
         $scope.input = {};
 
@@ -14,12 +16,9 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails'], fu
         $scope.months = $scope.monthsList;   //array of months
         $scope.input.month = $scope.monthsList[11];//initializing to default
 
-
-        var session_data = {};
         var cache = hkbCache.get('SearchData');
-       
-        
-         if(null!==cache && !angular.isUndefined(cache)){// true in case coming back from reports
+        usSpinnerService.stop('spinner-1');
+        if(null!==cache && !angular.isUndefined(cache)){// true in case coming back from reports
             //initialising with previously selected value
             $scope.input.portfolio = cache.portfolio;
             $scope.input.month = $scope.monthsList[cache.month-1];
@@ -27,6 +26,10 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails'], fu
         }   
 
         hkbCache.removeAll(); // removing cache if coming from details or report page     
+
+        $scope.isPortfolioValid = function(){
+            return ($scope.searchform.portfolio.$invalid && !$scope.searchform.$pristine);
+        }
 
         $scope.search = function () {
             $location.path('/reports').search({
@@ -42,8 +45,6 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails'], fu
             }
         };
 
-
-        var currentMonth = new Date().getMonth() + 1;
 
         function getYearList(){
             var initial_year;
@@ -108,11 +109,9 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails'], fu
             }
             
         };
-        
-        
-        
 
-
+        $scope.getYearMonths(); //coming back from reports, so that months filtering happens
+        
     }]);
 
 });

@@ -1,51 +1,60 @@
 <div class="panel panel-default">
 	<div class="panel-heading" >
-		<button class="btn btn-default ocf-btn-back" ng-click="gotoReports()" title="back">{{'LABEL_BACK' | translate}}</button>
-		<h2 class="panel-title">{{'LABEL_REPORT_SCREEN_NAME' | translate}}</h2>
+		<button print-remove class="btn btn-default ocf-btn-back" ng-click="gotoReports()" title="back"><span translate>LABEL_BACK</span></button>
+		<h2 class="panel-title"><span translate>LABEL_REPORT_SCREEN_NAME</span></h2>
 
-		<span class="glyphicon ocf-icon-large glyphicon-print print-icon" title="print"></span>
-		<span class="excel-icon" title="export"></span>
+		<span print-remove print-btn class="glyphicon ocf-icon-large glyphicon-print pointer margin-right-10 float-right hidden-xs hidden-xxs" title="print"></span>
+		<span print-remove class="glyphicon ocf-icon-large glyphicon-download-save pointer margin-right-10 float-right" title="export" ng-click="getExcel()"></span>
 	</div>
-	<div class="panel-body">
+	<div class="panel-body" ng-cloak>
+		<div id="http-error-block"></div>
 		<div class="well">
 			<div class="row">
-				<div class="col-sm-6 ocf-label-static"><p translate>LABEL_PORTEFEUILLE_NUMMER</p></div>
-				<div class="col-sm-6">{{portfolio | formatAccountNr | limitTo : 13}}</div>
+				<div class="col-xs-6 ocf-label-static"><p translate>LABEL_PORTEFEUILLE_NUMMER</p></div>
+				<div class="col-xs-6">{{portfolio | formatAccountNr | limitTo : 13}}</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6 ocf-label-static"><p translate>LABEL_SEARCH_DATE</p></div>
-				<div class="col-sm-6">{{fromDate}} t/m {{tillDate}}</div>
+				<div class="col-xs-6 ocf-label-static"><p translate>LABEL_SEARCH_DATE</p></div>
+				<div class="col-xs-6">{{fromDate | date:'dd MMM yyyy' | formatdate:currentLanguage}} t/m {{correctedTillDate | date:'dd MMM yyyy' | formatdate:currentLanguage}}</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-6 ocf-label-static">
+				<div class="col-xs-6 ocf-label-static">
 					<p ng-if="currentLanguage=='nl'">{{groupNameNL}}</p>
 					<p ng-if="currentLanguage=='en'">{{groupNameEN}}</p>
 				</div>
-				<div class="col-sm-6">{{groupTotal}}</div>
+				<div class="col-xs-6">{{groupTotal  | currency | limitTo : 16}}</div>
 			</div>
 		</div>
 
 
-		<div class="table-responsive">
+		<div class="table-responsive" ng-show="data.positions">
 			<table class="table table-bordered table-striped responsive-utilities" >
+				<!-- <colgroup class="hidden-xs hidden-xxs">
+					<col width="16%"></col>
+					<col width="11%"></col>
+					<col width="25%"></col>
+					<col width="10%"></col>
+					<col width="25%"></col>
+					<col width="13%"></col>
+				</colgroup> -->
 				<thead>
 					<tr>
 						<th><span translate>LABEL_POSITION_DATE</span></th>
 						<th><span translate>LABEL_FONDSCODE</span></th>
-						<th><span translate>LABEL_FONDS_NAME</span></th>
-						<th><span translate>LABEL_LEDGER</span></th>
-						<th><span translate>LABEL_LEDGER_DESC</span></th>
-						<th><span translate>LABEL_LEDGER_VALUE</th>
+						<th class="hidden-xs hidden-xxs"><span translate>LABEL_FONDS_NAME</span></th>
+						<th class="hidden-xs hidden-xxs"><span translate>LABEL_LEDGER</span></th>
+						<th ><span translate>LABEL_LEDGER_DESC</span></th>
+						<th><span translate>LABEL_LEDGER_VALUE</span></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="position in data.positions">
+					<tr ng-repeat="position in data.positions" data-ng-if="$index<reslt_per_page">
 						<td class="">{{position.positionDate | date:'dd MMM yyyy HH:mm' | formatdate:currentLanguage}}</td>
 						<td class="">{{position.instrument.instrumentCode}}</td>
-						<td class="">{{position.instrument.instrumentNameShort | trim | limitTo : 40}}</td>
-						<td class="">{{position.ledger.ledgerNumber}}</td>
-						<td class="">{{position.ledger.ledgerDescription}}</td>
-						<td class="">{{position.ledger.ledgerValue}}</td>
+						<td class="hidden-xs hidden-xxs">{{position.instrument.instrumentNameShort | trim | limitTo : 40}}</td>
+						<td class="hidden-xs hidden-xxs">{{position.ledger.ledgerNumber}}</td>
+						<td class="">{{position.ledger.ledgerDescription  | trim | limitTo : 20}}</td>
+						<td align="right">{{position.ledger.ledgerValue | currency :""}}</td>
 					</tr>
 				</tbody>
 				
@@ -54,7 +63,7 @@
 		</div>
 
 	</div>
-	<div class="panel-footer pagination-div" ng-show="!disablePaging">
+	<div print-remove class="panel-footer pagination-div" ng-show="!disablePaging  && data.positions">
 		<div class="row">
 			<div class="col-sm-1" style="vertical-align: middle; margin:auto;"><span translate>LABEL_PAGE_RANGE</span>{{present_page}}</div>
 			<div  class="col-sm-4 col-sm-offset-3" >
@@ -70,11 +79,3 @@
 		</div>
 	</div>
 </div>
-
-
-
-
-
-
-
-

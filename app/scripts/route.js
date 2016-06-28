@@ -22,29 +22,3 @@ define( [ 'angularAMD' ], function (angularAMD) {
 
 	return config;
 });
-
-/*define( ['app' 'angularAMD' ], function (app,angularAMD) {
-
-app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/search');
-    $stateProvider
-        .state('search', {
-            url: '/search',
-            templateUrl: 'app/modules/hkbsearch/views/hkbsearch.html',
-			controller : 'hkbsearchCtr',
-			controllerUrl : 'app/modules/hkbsearch/hkbSearchCtrl.js'
-        })
-        .state('reports', {
-            url: '/reports',
-            templateUrl: 'app/modules/hkbreports/views/hkbreport.html',
-			controller : 'hkbreportCtr',
-			controllerUrl : 'app/modules/hkbreports/hkbReportCtrl.js'
-        })
-        .state('search', {
-            url: '/search',
-            templateUrl: 'app/modules/hkbsearch/views/hkbsearch.html',
-			controller : 'hkbsearchCtr',
-			controllerUrl : 'app/modules/hkbsearch/hkbSearchCtrl.js'
-        });
-        
-});*/

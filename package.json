@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "description": "A starter project for AngularJS using LiWid Framework for TCS ABM AMRO Account",
-  "repository": "https://c39199@p-bitbucket.nl.eu.abnamro.com:7999/scm/~c39199/liwid-seed.git",
-  "license": "MIT",
+  "repository": "https://p-bitbucket.nl.eu.abnamro.com:7999/scm/~c39199/liwid-seed.git",
+  "license": "",
   "devDependencies": {
     "bower": "^1.3.1",
     "http-server": "^0.6.1",

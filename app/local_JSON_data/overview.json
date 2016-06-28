@@ -1,0 +1,67 @@
+{  
+   "investmentCostReportId": {
+      "portfolioNumber": "213000725",
+      "month": 1,
+      "year": 2016
+   },
+   "reportBlocks":[  
+      {  
+         "reportBlockNumber":1,
+         "reportBlockNameNL":"Kosten voor de beleggingsdienstverlening",
+         "reportBlockNameEN":"Costs for investment services",
+         "reportBlockTotalValue":849.18,
+         "reportGroups":[  
+            {  
+               "reportGroupNumber":1,
+               "reportGroupNameNL":"Advieskosten",
+               "reportGroupNameEN":"Advisory fees",
+               "isGroupAggregated":false,
+               "reportGroupValue":478.16
+            },
+            {  
+               "reportGroupNumber":2,
+               "reportGroupNameNL":"Btw",
+               "reportGroupNameEN":"VAT",
+               "isGroupAggregated":false,
+               "reportGroupValue":82.98
+            },
+            {  
+               "reportGroupNumber":3,
+               "reportGroupNameNL":"Transactiekosten",
+               "reportGroupNameEN":"Transaction costs",
+               "isGroupAggregated":true,
+               "reportGroupValue":288.04
+            }
+         ]
+      },
+      {  
+         "reportBlockNumber":2,
+         "reportBlockNameNL":"Door de bank ingehouden belastingen",
+         "reportBlockNameEN":"Taxes and Discounts by bank",
+         "reportBlockTotalValue":62.89,
+         "reportGroups":[  
+            {  
+               "reportGroupNumber":1,
+               "reportGroupNameNL":"Dividendbelasting",
+               "reportGroupNameEN":"Dividend tax",
+               "isGroupAggregated":false,
+               "reportGroupValue":34.04
+            },
+            {  
+               "reportGroupNumber":2,
+               "reportGroupNameNL":"Buitenlandse bronbelasting",
+               "reportGroupNameEN":"Foreign withholding tax",
+               "isGroupAggregated":false,
+               "reportGroupValue":8.85
+            },
+            {  
+               "reportGroupNumber":3,
+               "reportGroupNameNL":"Transactiebelasting",
+               "reportGroupNameEN":"Transaction tax",
+               "isGroupAggregated":false,
+               "reportGroupValue":20.00
+            }
+         ]
+      }
+   ]
+}

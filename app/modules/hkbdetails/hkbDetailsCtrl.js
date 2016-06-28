@@ -1,7 +1,10 @@
 'use strict';
-define(['app','jquery','models/getpositiondetails','liwid-modules','liwid-filters','models/exportpositions','spin','angular-spinner'], function (app) {
+define(['app','jquery','models/getpositiondetails','liwid-modules','liwid-filters','models/exportpositions','spin','angular-spinner','print'], function (app) {
 
-    app.controller('hkbdetailsCtr', ['$scope', '$rootScope', 'gettextCatalog', '$location','CostDetails','$timeout','ExportANPositions','hkbCache','usSpinnerService', function ($scope, $rootScope, gettextCatalog, $location,CostDetails,$timeout,ExportANPositions,hkbCache,usSpinnerService) {
+    app.controller('hkbdetailsCtr', ['$scope', '$rootScope', 'gettextCatalog', '$location','CostDetails','$timeout','ExportANPositions','hkbCache','usSpinnerService','InitialAuthCheck', function ($scope, $rootScope, gettextCatalog, $location,CostDetails,$timeout,ExportANPositions,hkbCache,usSpinnerService,InitialAuthCheck) {
+        
+        InitialAuthCheck('/investmentcosts','LABEL_AUTHORIZATION_ERROR','MESSAGE_AUTH_ERROR_FRONTEND');
+
         usSpinnerService.stop('spinner-1');
         //initializing to default
         $scope.portfolio = '0';
@@ -15,13 +18,19 @@ define(['app','jquery','models/getpositiondetails','liwid-modules','liwid-filter
         $scope.fromDate = '';
         $scope.tillDate = '';
         
-        $scope.search_clicked = false;
-        $scope.nosearchoutput = false;
+        //paging variables
+        $scope.maxSize = 1;
         $scope.options = [ 10, 20, 30, 50, 75, 100 ];
         $scope.reslt_per_page = 10;
         $scope.present_page = 1;
-        $scope.data={};
         var pagechanged = false;
+
+
+        $scope.search_clicked = false;
+        $scope.nosearchoutput = false;
+        
+        $scope.data={};
+        
         var session_data = {};
 
         var cache = hkbCache.get('DetailsData');
@@ -41,28 +50,24 @@ define(['app','jquery','models/getpositiondetails','liwid-modules','liwid-filter
         }
 
         //initializing with values stored in the details screen itself
-        /*if(null !== cache && !angular.isUndefined(cache)){
-            $scope.portfolio = cache.portfolioNumber;
-            $scope.month = cache.month;
-            $scope.blockNumber = cache.blockNumber;
-            $scope.groupNumber = cache.groupNumber;
-            $scope.year = cache.year;
-            $scope.groupNameNL = cache.groupNameNL;
-            $scope.groupNameEN = cache.groupNameEN;
-            $scope.groupTotal = cache.groupTotal;    
-        }
-*/
+        
         $scope.gotoReports = function () {
            storeSearchData(); 
            $location.path('/reports');
 
-       };
+        };
+
+        $scope.getRecalculatedUTCDate = function (utcDateString) {
+            var d = new Date(utcDateString);
+            return millisToUTCDate(d.getTime());
+        };    
+
 
        $scope.callResourceService = function() {
 
         usSpinnerService.spin('spinner-1');
         $scope.disablePaging = false;
-        CostDetails(gettextCatalog.currentLanguage).get({ 
+        CostDetails($rootScope.currentLanguage).get({ 
             view : "DETAIL",
             portfolioNumber : $scope.portfolio,
             month : $scope.month,
@@ -73,23 +78,15 @@ define(['app','jquery','models/getpositiondetails','liwid-modules','liwid-filter
             pageSize : $scope.reslt_per_page,
             totalCost:0
         }, function(result) {
-
-
             if(angular.isDefined(result.investmentCost) && result.investmentCost !== null){
                 $('#http-error-id').hide();
-                    // $scope.search_clicked = true;
-
-                    $scope.data = result.investmentCost;
-                //$scope.data = result;
-                console.log($scope.data );
-                console.log($scope.data.positions );
-
-                $scope.fromDate = result.dateFrom;
-                $scope.tillDate = result.dateTill;
-                //var positions = $scope.data.positionList;
+                $scope.data = result.investmentCost;
+                $scope.fromDate =  $scope.data.dateFrom;
+                $scope.tillDate =  $scope.data.dateTill;
+                $scope.correctedTillDate = $scope.getRecalculatedUTCDate($scope.tillDate);
                 if($scope.data.positions.length < $scope.reslt_per_page){
                     $scope.totalItems = ($scope.present_page) * $scope.reslt_per_page;
-                    if($scope.present_page==1 && $scope.data.positions.length<10){
+                    if($scope.present_page === 1 && $scope.data.positions.length < 10){
                         $scope.disablePaging = true;
                     }
                 }else{
@@ -109,11 +106,12 @@ define(['app','jquery','models/getpositiondetails','liwid-modules','liwid-filter
                 usSpinnerService.stop('spinner-1');
             }
         },function(response) {
-            console.log("error")
             if($scope.present_page>1){
                 $scope.present_page = $scope.present_page - 1;
                 storeSearchData();
+                $('#http-error-block').hide();
             }
+            usSpinnerService.stop('spinner-1');
         });
 };
 
@@ -133,23 +131,21 @@ function storeSearchData(){
 
 $scope.getExcel = function () {
 
-    window.location.href = 'http://s05ast0025-c08.nl.eu.abnamro.com:14592/investmentcosts/export?view=EXPORT&portfolioNumber='+$scope.portfolio+'&month='+$scope.month+'&reportBlockNumber='+$scope.blockNumber+'&reportGroupNumber='+$scope.groupNumber+'&year='+$scope.year+'&totalCost=0';
+    window.location.href = '/investmentcosts/export?view=EXPORT&portfolioNumber='+$scope.portfolio+'&month='+$scope.month+'&year='+$scope.year+'&reportBlockNumber='+$scope.blockNumber+'&reportGroupNumber='+$scope.groupNumber;
 
+};
 
-           /* ExportANPositions(gettextCatalog.currentLanguage).get({ 
-                view : "EXPORT",
-                portfolioNumber : $scope.portfolio,
-                month : $scope.month,
-                reportBlockNumber : $scope.blockNumber,
-                reportGroupNumber : $scope.groupNumber,
-                year : $scope.year,
-                totalCost:0
-        }, function(result) {          
-        });*/
+var toUTCDate = function(date){
+    var _utc = new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),  date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+    return _utc;
+};
+  
+var millisToUTCDate = function(millis){
+    return toUTCDate(new Date(millis));
 };
 
 $scope.pageChanged = function(page) {
-    if (page == 1 && pagechanged != true) {
+    if (page === 1 && pagechanged !== true) {
         $scope.present_page = page;
         $scope.callResourceService();
         pagechanged = true;

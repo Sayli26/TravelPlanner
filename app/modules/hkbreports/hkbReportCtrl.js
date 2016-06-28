@@ -1,8 +1,11 @@
 'use strict';
-define(['app', 'jquery','models/getcostreports','models/getpositiondetails','liwid-modules','liwid-filters','spin','angular-spinner'], function (app, $) {
+define(['app', 'jquery','models/getcostreports','models/getpositiondetails','liwid-modules','http-error-handling','liwid-filters','spin','angular-spinner','print'], function (app) {
 	
-    app.controller('hkbreportCtr', ['$scope', '$rootScope', 'gettextCatalog', '$location','CostReports','$filter','hkbCache','usSpinnerService', function ($scope, $rootScope, gettextCatalog, $location,CostReports,$filter,hkbCache,usSpinnerService) {
+    app.controller('hkbreportCtr', ['$scope', '$rootScope', 'gettextCatalog', '$location','CostReports','$filter','hkbCache','usSpinnerService','InitialAuthCheck', function ($scope, $rootScope, gettextCatalog, $location,CostReports,$filter,hkbCache,usSpinnerService,InitialAuthCheck) {
 
+        InitialAuthCheck('/investmentcosts','LABEL_AUTHORIZATION_ERROR','MESSAGE_AUTH_ERROR_FRONTEND');
+
+        usSpinnerService.stop('spinner-1');
 
         $scope.monthsList = [{"nameEN" : "Jan", "nameNL" : "Jan", "value" : 1 }, {"nameEN" : "Feb","nameNL" : "Feb", "value" : 2 }, {"nameEN" : "Mar", "nameNL" :"Mrt" ,"value" : 3 }, {"nameEN" : "Apr","nameNL" : "Apr" , "value" : 4 }, {"nameEN" : "May","nameNL" : "Mei" , "value" : 5 }, {"nameEN" : "Jun","nameNL" : "Jun" , "value" : 6 }, {"nameEN" : "Jul", "nameNL" : "Jul" , "value" : 7 }, {"nameEN" : "Aug", "nameNL" : "Aug" ,"value" : 8 }, {"nameEN" : "Sep", "nameNL" : "Sep" ,"value" : 9 }, {"nameEN" : "Oct", "nameNL" : "Okt" ,"value" : 10 }, {"nameEN" : "Nov", "nameNL" : "Nov" ,"value" : 11 }, {"nameEN" : "Dec", "nameNL" : "Dec" ,"value" : 12 }];
         
@@ -11,26 +14,19 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails','liw
         $scope.year ='';
         $scope.monthObj = {};
         $scope.dataReport = {};
+        $scope.showCostDataNotFound = false;
+        $scope.showTaxDataNotFound = false;
 
-
-        $scope.getBlockLabel = function (index) {
-            return "LABEL_NAME_REPORT_BLOCK" + (index+1);
-        }
-        
-        var searchObject = $location.search(); 
-        if(null !== searchObject && !angular.isUndefined(searchObject)){//true in case coming from search
-           console.log(" search object mein");
+        var searchObject = $location.search();
+        if(null !== searchObject && !angular.isUndefined(searchObject)) {//true in case coming from search
            $scope.portfolio = searchObject.portfolioNumber;
-           console.log( searchObject.month-1);
            $scope.monthObj = $scope.monthsList[searchObject.month-1];
-           console.log( $scope.monthObj);
            $scope.year = searchObject.year;
-       }      
+        }     
 
-       var session_data = {};
-       var cache = hkbCache.get('SearchData');
+        var session_data = {};
+        var cache = hkbCache.get('SearchData');
         if(null!==cache && !angular.isUndefined(cache)){// true in case coming back from details
-            console.log("cache mein");
             //initialising with previously selected/searched values
             $scope.portfolio = cache.portfolio;
             $scope.monthObj = $scope.monthsList[cache.month-1];
@@ -38,23 +34,24 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails','liw
         }
 
         $scope.loadData = function () {
-            
+
             usSpinnerService.spin('spinner-1');
-            CostReports(gettextCatalog.currentLanguage).get({
+            CostReports($rootScope.currentLanguage).get({
                 view : "OVERVIEW",
                 portfolioNumber : $scope.portfolio,
                 month : $scope.monthObj.value,
                 year : $scope.year    
             }, function(result) {
-                $scope.dataReport = result.investmentCost;
+                $scope.dataReport = result;
                 usSpinnerService.stop('spinner-1');
             },function(error){
-                console.log("data not fetched");
                 usSpinnerService.stop('spinner-1');
             });        
         };
 
-        $scope.loadData();
+        if(angular.isDefined($scope.portfolio) && angular.isDefined($scope.monthObj) && angular.isDefined($scope.year)){
+            $scope.loadData();
+        }
 
         $scope.getDetails = function (blockIndex,groupIndex) {
             usSpinnerService.spin('spinner-1');
@@ -66,7 +63,6 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails','liw
             var groupNameEN = selectedGroup.reportGroupNameEN;
             var selectedGroupValue = selectedGroup.reportGroupValue;
 
-            console.log(blockNumber+" "+groupNumber);     
             storeSearchData();
             $location.path('/details').search({
                 view : "DETAILS",
@@ -81,31 +77,19 @@ define(['app', 'jquery','models/getcostreports','models/getpositiondetails','liw
             });              
         };
 
-
         $scope.gotoSearch=function(){
             storeSearchData();
-            $location.path('/search')
+            $location.path('/search');
         }
 
-
-        //setting search arameter in cache
+        //setting search parameter in cache
         function storeSearchData() {
-            session_data.portfolio = $scope.portfolio;
-            session_data.month = $scope.monthObj.value;
-            session_data.year = $scope.year;
-            hkbCache.put('SearchData', session_data);
-        };
-
-        $scope.changetoNL = function() {
-            gettextCatalog.currentLanguage = 'nl';
-            $rootScope.currentLanguage = 'nl';
-            return false;
-        };
-        
-        $scope.changetoEN = function() {
-            gettextCatalog.currentLanguage = 'en';
-            $rootScope.currentLanguage = 'en';
-            return false;
+            if(angular.isDefined($scope.portfolio) && angular.isDefined($scope.monthObj) && angular.isDefined($scope.year)){
+                session_data.portfolio = $scope.portfolio;
+                session_data.month = $scope.monthObj.value;
+                session_data.year = $scope.year;
+                hkbCache.put('SearchData', session_data);
+            }
         };
 
     }]);

@@ -1,0 +1,155 @@
+
+<!-- start abn amro header -->
+<div class="container-fluid-nomax ocf-header" ng-controller="HeaderController">
+
+    <div class="container-fluid">
+        <a ui-sref="about"><span class="ocf-brand ocf-cutout">
+           </span></a>
+        <div class="ocf-header-right" >
+            <!-- Dropdown button -->
+            <div class="btn-group" data-dropdown ng-controller="ThemeSelectionController">
+                <button id="selectTheme" type="button" class="btn btn-default ocf-dropdown btn-smallest-width" data-dropdown-toggle>
+                    <span class="glyphicon glyphicon-cog"></span>
+                    <span class="ocf-dropdown-content hidden-xs hidden-xxs">Thema</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="selectTheme"  ng-model="changeThemeSelectedModel"  data-testid="select-theme">
+                    <li><a ng-click="changeTheme('oca/style/css/themes/abnamro/')" data-testid="select-abn">ABN AMRO</a></li>
+                    <li><a ng-click="changeTheme('oca/style/css/themes/ideal/')" data-testid="select-ideal">Ideal</a></li>
+                    <li><a ng-click="changeTheme('oca/style/css/themes/cb/')" data-testid="select-cb">CB</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a ng-click="changeTheme('oca/style/css/themes/non-oca-framed/')" data-testid="select-framed">Non supported framed theme</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- begin navigation -->
+    <div class="navbar-container" data-ng-app>
+    <nav class="navbar navbar-default navbar-main">
+        <div class="container-fluid">
+
+            <!-- The actual items -->
+            <ul class="nav navbar-nav">
+                <li ui-sref-active="active">
+                    <a ui-sref="about" >About</a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="grid({item: 'top'})" >Grid</a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="typography">Typography &amp; Colors</a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="icons" >Icons</a>
+                </li>
+                <li ui-sref-active="active" class="ocf-has-subnav" data-ng-model="collapsed" >
+                    <a ui-sref="navigation">Navigation</a>
+                    <ul class="nav">
+                        <li ui-sref-active="active" class="ocf-has-subnav ocf-subnav-level2" >
+                            <a ui-sref="navigation({item: 'level2'})">Level 2</a>
+                            <ul class="nav">
+                                <li ui-sref-active="active" class="ocf-subnav-level3">
+                                    <a ui-sref="navigation({item: 'level3'})">Level 3</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active" class="ocf-has-subnav" data-ng-model="collapsed2"  >
+                    <a ui-sref="alerts" >Alerts &amp; Modals</a>
+                    <ul class="nav">
+                        <li ui-sref-active="active" class="ocf-has-subnav ocf-subnav-level2" >
+                            <a ui-sref="alerts({item: 'level2a'})">Level 2 a</a>
+                            <ul class="nav">
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3a'})">Level 3 a</a>
+                                </li>
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3b'})">Level 3 b </a>
+                                </li>
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3c'})">Level 3 c</a>
+                                </li>
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3d'})">Level 3 d </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="ocf-subnav-level2" >
+                            <a ui-sref="alerts({item: 'level2b'})">Level 2 b</a>
+                        </li>
+                        <li class="ocf-subnav-level2" >
+                            <a ui-sref="alerts({item: 'level2c'})">Level 2 c</a>
+                        </li>
+                        <li class="ocf-has-subnav ocf-subnav-level2" >
+                            <a ui-sref="alerts({item: 'level2d'})">Level 2 d</a>
+                            <ul class="nav">
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3a'})">Level 3 a</a>
+                                </li>
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3b'})">Level 3 b </a>
+                                </li>
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3c'})">Level 3 c</a>
+                                </li>
+                                <li class="ocf-subnav-level3">
+                                    <a ui-sref="alerts({item: 'level3d'})">Level 3 d </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active" class="ocf-has-subnav" data-ng-model="collapsed3" >
+                    <a ui-sref="forms" >Forms</a>
+                    <ul class="nav">
+                        <li ui-sref-active="active" class="ocf-has-subnav ocf-subnav-level2"  >
+                            <a ui-sref="grid">Level 2-1</a>
+                            <ul class="nav">
+                                <li ui-sref-active="active" class="ocf-subnav-level3">
+                                    <a ui-sref="grid">Level 3 uno</a>
+                                </li>
+                                <li ui-sref-active="active" class="ocf-subnav-level3">
+                                    <a ui-sref="grid">Level 3 dos</a>
+                                </li>
+                                <li ui-sref-active="active" class="ocf-subnav-level3">
+                                    <a ui-sref="grid">Level 3 tres</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li ui-sref-active="active" class="ocf-has-subnav ocf-subnav-level2">
+                            <a ui-sref="grid">Level 2-2</a>
+                            <ul class="nav">
+                                <li ui-sref-active="active" class="ocf-subnav-level3">
+                                    <a ui-sref="grid">Level 3-1</a>
+                                </li>
+                                <li ui-sref-active="active" class="ocf-subnav-level3">
+                                    <a ui-sref="grid">Level 3-2</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="layout" >Layout</a>
+                </li>
+                <li ui-sref-active="active">
+                    <a ui-sref="components" >Components</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+     <div class="navbar-hamburger">
+        <button type="button" class="btn-nav-expander hidden-lg hidden-md">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="small">Menu</span>
+        </button>
+    </div>
+    <!-- end navigation -->
+</div></div>
+<!-- end abn amro header -->

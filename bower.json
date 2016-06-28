@@ -3,9 +3,9 @@
   "description": "A starter project for AngularJS using LiWid Framework for TCS ABM AMRO Account",
   "version": "0.0.0",
   "homepage": "",
-  "license": "MIT",
+  "license": "",
   "private": true,
   "dependencies": {
-    "liwid": "https://C39199@p-bitbucket.nl.eu.abnamro.com:7999/scm/~c39199/liwid.git"
+    "liwid": "https://p-bitbucket.nl.eu.abnamro.com:7999/scm/~c39199/liwid.git"
   }
 }

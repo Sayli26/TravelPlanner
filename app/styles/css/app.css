@@ -1,4 +1,9 @@
-row-selection:hover{
-	background:#CBE3E3;
-	cursor:pointer;
+.row-selection-imp:hover{
+  background:#CBE3E3 !important;
+  cursor:pointer !important;
+}
+
+.borderless-table-cells > thead > tr > th, .borderless-table-cells > thead > tr > td, .borderless-table-cells > tbody > tr > th, .borderless-table-cells > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+  line-height: 1;
+  border-top: 0px;
 }

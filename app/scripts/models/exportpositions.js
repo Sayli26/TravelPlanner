@@ -2,7 +2,7 @@
 define(['app','angular-resource'], function (app) {
 	app.factory("ExportANPositions", function($resource,$location) {
 		return function(lang){
-			return $resource('http://localhost:9088/investmentcosts/export', {}, {
+			return $resource('../local_JSON_data/details.json', {}, {
 				'get' : {
 					method : 'GET',
 					headers : {'Accept-Language':lang}
